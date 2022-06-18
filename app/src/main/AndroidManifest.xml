@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Nadri4edit1">
         <activity
-            android:name=".PhotoList"
+            android:name=".AlbumLayout"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -28,7 +28,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PageList"></activity>
+        <activity android:name=".PageList_deprecated"></activity>
     </application>
 
 </manifest>

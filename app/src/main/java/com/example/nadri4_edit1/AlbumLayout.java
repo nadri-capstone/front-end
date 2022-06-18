@@ -20,16 +20,14 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class PhotoList extends AppCompatActivity {
+public class AlbumLayout extends AppCompatActivity {
 
     //이미지의 uri를 담는 리스트
     ArrayList<Uri> uriList = new ArrayList<>();
@@ -60,17 +58,27 @@ public class PhotoList extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("GOO", "hwa");
-                ReqServer.request(PhotoList.this, 0);
+                ReqServer.request(AlbumLayout.this, 0);
 
             }
         });
 
         //인텐트
-        Intent intent = getIntent();
-        int iDay = intent.getIntExtra("SelectedDATE",-1);
-
+        Intent getDateIntent = getIntent();
+        int iDay = getDateIntent.getIntExtra("SelectedDATE",-1);
         //화면 설정
         setView(iDay);
+
+
+        /*Intent getImageIntent = getIntent();
+        uriList = (ArrayList<Uri>)getImageIntent.getSerializableExtra("Photo");
+        //uriList.add((Uri) intent.getSerializableExtra("Photo"));
+
+        adapter = new MultiImageAdapter(uriList, getApplicationContext());
+
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        */
 
         //이미지 가져오기 버튼
         btnGetImage.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +105,6 @@ public class PhotoList extends AppCompatActivity {
     }
 
     //앨범에서 액티비티로 돌아온 후 실행되는 메서드
-
-
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -120,7 +126,7 @@ public class PhotoList extends AppCompatActivity {
                 try {
                     ExifInterface exif = new ExifInterface(getRealPathFromURI(imageUri));
                     Log.d("HWA", String.valueOf(getRealPathFromURI(imageUri)));
-                    ReqServer.request(PhotoList.this, exif.getDateTime());
+                    ReqServer.request(AlbumLayout.this, exif.getDateTime());
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("HWA", e + "");

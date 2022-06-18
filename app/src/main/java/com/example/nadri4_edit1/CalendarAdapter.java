@@ -138,7 +138,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.Calend
                 Toast.makeText(holder.itemView.getContext(), "클릭", Toast.LENGTH_SHORT).show();
 
                 Context context = view.getContext();
-                Intent selectDay = new Intent(context, PageList.class);
+                Intent selectDay = new Intent(context, AlbumLayout.class);
                 //Intent intent = new Intent(holder.itemView.getContext(), PageList.class);
 
                 //넘길 데이터 : 클릭한 날짜 보내기 - day값만 보내면 됨

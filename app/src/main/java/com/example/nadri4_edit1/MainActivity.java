@@ -23,7 +23,7 @@ import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
-    TextView current;   //년, 월 텍스트뷰
+    TextView currentYear, currentMonth;   //년, 월 텍스트뷰
     TextView btnPrev, btnNext, btnSettings;
 
     RecyclerView recyclerView;
@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         context = this; //컨텍스트 지정
 
         //초기화
-        current = (TextView) findViewById(R.id.tvCurrent);
+        currentYear = (TextView) findViewById(R.id.tvCurrentYear);
+        currentMonth = (TextView) findViewById(R.id.tvCurrentMonth);
         btnPrev = (TextView) findViewById(R.id.tvPrev);
         btnNext = (TextView) findViewById(R.id.tvNext);
         btnSettings = (TextView) findViewById(R.id.btnSettings);
@@ -111,6 +112,34 @@ public class MainActivity extends AppCompatActivity {
         return yearMonth;
     }
 
+    //년도
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String selectedYear(Calendar calendar){  //2022년 5월
+
+        //년월 포맷
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy   MM");
+        return date.format(formatter);*/
+        int year = calendar.get(Calendar.YEAR);
+
+        String selectedY = String.valueOf(year);
+
+        return selectedY;
+    }
+
+    //월
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private String selectedMonth(Calendar calendar){  //2022년 5월
+
+        //년월 포맷
+        /*DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy   MM");
+        return date.format(formatter);*/
+        int month = calendar.get(Calendar.MONTH)+1;
+
+        String selectedM = month + "월";
+
+        return selectedM;
+    }
+
     //날짜 타입 설정(2022년 05월 23일)
     /*@RequiresApi(api = Build.VERSION_CODES.O)
     private String dateFormatTextView(LocalDate date){  //2022년 5월
@@ -124,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setMonthView(){
         //텍스트뷰 셋팅
-        current.setText(dateFormat(CalendarUtil.selectedDate));
+        currentYear.setText(selectedYear(CalendarUtil.selectedDate));
+        currentMonth.setText(selectedMonth(CalendarUtil.selectedDate));
 
         //해당 월 날짜 가져오기
         ArrayList<Date> dateList = daysInMonthArray();

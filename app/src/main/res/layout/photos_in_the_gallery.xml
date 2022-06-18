@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PhotoList"
+    tools:context=".AlbumLayout"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -25,7 +26,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnGetImage"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,12 +36,13 @@
             android:layout_gravity="right"/>
 
         <Button
-            android:id="@+id/btnGetImage"
+            android:id="@+id/btnSave"
             android:background="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:text="+"
+            android:text=">"
+            android:rotation="90"
             android:textSize="20dp"
             android:layout_gravity="right"/>
     </LinearLayout>
