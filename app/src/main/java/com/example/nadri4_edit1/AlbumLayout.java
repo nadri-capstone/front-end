@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,9 +24,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AlbumLayout extends AppCompatActivity {
 
@@ -42,7 +43,7 @@ public class AlbumLayout extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photos_in_the_gallery);
+        setContentView(R.layout.album_layout);
 
         ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, MODE_PRIVATE);
 
@@ -80,6 +81,7 @@ public class AlbumLayout extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         */
 
+
         //이미지 가져오기 버튼
         btnGetImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +106,10 @@ public class AlbumLayout extends AppCompatActivity {
         });
     }
 
-    //앨범에서 액티비티로 돌아온 후 실행되는 메서드
+    //기존에 저장된 앨범 레이아웃이 있다면 불러와서 보여줘야 함...
+    /*..{내용}..*/
+
+    //앨범에서 액티비티로 돌아온 후 실행되는 메서드 = 앨범 레이아웃 생성!
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -121,8 +126,19 @@ public class AlbumLayout extends AppCompatActivity {
 
                 adapter = new MultiImageAdapter(uriList, getApplicationContext());
 
+                //레이아웃 설정(열 = 2)
+                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+                //recyclerView.LayoutManager(new GridLayoutManager(this, 2));
+
+                //레이아웃 적용
+                recyclerView.setLayoutManager(manager);
+
+                //어댑터 적용
                 recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+
+                //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+
+                //서버테스트
                 try {
                     ExifInterface exif = new ExifInterface(getRealPathFromURI(imageUri));
                     Log.d("HWA", String.valueOf(getRealPathFromURI(imageUri)));
@@ -131,6 +147,7 @@ public class AlbumLayout extends AppCompatActivity {
                     e.printStackTrace();
                     Log.d("HWA", e + "");
                 }
+
             }//이미지를 하나만 선택
             else{
                 ClipData clipData = data.getClipData();
@@ -146,10 +163,18 @@ public class AlbumLayout extends AppCompatActivity {
                 }
 
                 adapter = new MultiImageAdapter(uriList, getApplicationContext());
+                //레이아웃 설정(열 = 2)
+                RecyclerView.LayoutManager manager = new GridLayoutManager(getApplicationContext(), 2);
+                //recyclerView.LayoutManager(new GridLayoutManager(this, 2));
+
+                //레이아웃 적용
+                recyclerView.setLayoutManager(manager);
+
+                //어댑터 적용
                 recyclerView.setAdapter(adapter);
 
                 //리사이클러뷰 수직 스크롤 적용
-                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+                //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
             }//이미지를 여러장 선택
         }//이미지 선택함
     }
